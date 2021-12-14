@@ -35,5 +35,5 @@ The user can remove coordinates from the list as they find Strongholds and reset
   - The angle used to calculate might be incorrect and lead to the distance between the Stronghold position and calculated position being farther than normal
 - If the given Stronghold coordinates are calculated to be outside of a ring, the program will ask the user if they want to enter the ring manually, have the program guess which ring it is in, or try to enter the coordinates again in case a mistake was made.
 - Currently there is no method to prevent calculation errors if the angle is calculated wrong due to the Stronghold snapping to a different location. In rare cases this can lead to two calculated coordinate positions having the Eye of Ender point to the same Stronghold.
-
+- This is program is my first Swing GUI project and first project of this kind so sorry if the code is a little messy.
 Please report any issues / bugs to me on discord at Trashpanda#6664 and I will try to fix them in a timely manner but cannot promise a deadline if it is during a school semeseter.
