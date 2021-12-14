@@ -1,4 +1,4 @@
-# Minecraft Strongholds Calculator
+# Minecraft Strongholds Locator
 For Minecraft Java Edition Versions 1.9 and later assuming there are no major changes to Stronghold generation.
 This is NOT a Minecraft Speedrun Stronghold location calculator, unless the speedrun is All Portals 1.9+
 
