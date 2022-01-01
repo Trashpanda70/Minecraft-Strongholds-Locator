@@ -17,6 +17,11 @@ For more information and details about Stronghold Generation visit [The Minecraf
 
 ![Minecraft Stronghold Generation rings with the distances from the origin and number of strongholds in each ring](https://static.wikia.nocookie.net/minecraft_gamepedia/images/9/9d/Strongholds_1.9.png/revision/latest/scale-to-width-down/400?cb=20210212055544)
 
+Each Stronghold has what can be referred to as a "starter staircase" which is the highest point in the Stronghold, a staircase that leads down into the Stronghold but there is nothing at the top. This starter staircase generates in the same [chunk](https://minecraft.fandom.com/wiki/Chunk) (a 16x16 block section of the world) that the Eye of Ender points to when locating the Stronghold. The Eye of Ender will always point to the center of this chunk. In order to be as accurate as possible, the coordinates that should be put into the program are the coordinates of the player standing at the center of this staircase. If this method of getting the coordinates is too confusing then there are two other options:
+
+1. Go up to the surface and find the place where the Eye of Ender points down into the ground and use those coordinates. This will be slightly less accurate.
+2. Pick a random place in the Stronghold and use those coordiantes. The accuracy of this will range from slightly less accurate to very inacurate depending on where in the Stronghold the coordinates are gotten from.
+
 ## How It Works
 The program uses the X and Z coordinates input by the player of the location of a Stronghold and performs simple Trigonometric calculations to determine the approximate location of the other Strongholds in the same ring as the given Stronghold. The user can display these coordinates in Nether Coordinates in order to travel to the calculated location faster. A summary of the process is outlined below.
 
@@ -30,6 +35,7 @@ The program uses the X and Z coordinates input by the player of the location of 
 The user can remove coordinates from the list as they find Strongholds and reset the UI for their next calculation.
 
 ## Notes
+- Accuracy tends to go down the farther from the origin the Stronghold is.
 - If a Stronghold tries to generate in certain places such as an Ocean, Swamp, or River, it may "snap" to a different biome it is allowed to generate in if it is close enough. This can have 2 effects:
   - The Stronghold position might slightly outside one of the rings
   - The angle used to calculate might be incorrect and lead to the distance between the Stronghold position and calculated position being farther than normal
