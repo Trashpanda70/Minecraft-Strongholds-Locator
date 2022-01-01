@@ -54,10 +54,15 @@ public class Coords
 	public String toString() {
 		return "(" + (int) x + ", " + (int) z + ")";
 	}
-	/**converts the coordinates to nether coordinates*/
+	/**Converts the coordinates to nether coordinates*/
 	public void convertNether() {
 		x /= 8;
 		z /= 8;
+	}
+	/**Converts the coordinates to overworld coordinates*/
+	public void convertOverworld() {
+		x *= 8;
+		z *= 8;
 	}
 	/**
 	 * Sets the Quadrant that the coordinates are in

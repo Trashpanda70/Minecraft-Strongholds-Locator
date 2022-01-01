@@ -4,16 +4,20 @@ import java.util.AbstractSequentialList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 /**
- * Custom list that extneds AbstractSequentialList and has a ListIterator
- * to use for iterating though the list.
+ * Custom list that extneds AbstractSequentialList and has a ListIterator to use for iterating though the list. 
+ * Chose to use this list over the LinkedList in the java.util to practice data structures.
  * @author Matthew Welker
  * @param <E> Generic type represnting the object in the list
  */
 public class LinkedList<E> extends AbstractSequentialList<E>
 {
+	/**Size of the list*/
 	private int size;
+	/**Front Node of the list*/
 	private Node front;
+	/**Last Node in the list*/
 	private Node last;
+	
 	public LinkedList() {
 		size = 0;
 		front = new Node(null, null, null); 
@@ -28,7 +32,9 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 	{
 		return new MyListIterator(index);
 	}
-	/**{@inheritDoc}*/
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int size()
 	{
@@ -37,10 +43,13 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 	
 	private class Node
 	{
+		/**The element that the Node holds, what data is actually added to the list*/
 		public E data;
+		/**Reference to the next Node in the list, or null if this Node is the last Node*/
 		public Node next;
-		//Doubly linked
+		/**Reference to the previous Node in the list, or null if this Node is the first Node*/
 		public Node prev;
+		
 		public Node(E data, Node next, Node last)
 		{
 			this.data = data;
@@ -48,6 +57,7 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			this.prev = last;
 		}
 	}
+	
 	private class MyListIterator implements java.util.ListIterator<E> {
 		private Node prev = front;
 		private Node next = prev.next;
@@ -63,12 +73,17 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 				next();
 			}
 		}
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public boolean hasNext()
 		{
 			return nextIdx != size;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public E next()
 		{
@@ -82,13 +97,17 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			lastRet = prev;
 			return lastRet.data;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public boolean hasPrevious()
 		{
 			return prevIdx != -1;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public E previous()
 		{
@@ -102,19 +121,25 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			lastRet = next;
 			return lastRet.data;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public int nextIndex()
 		{
 			return nextIdx;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public int previousIndex()
 		{
 			return prevIdx;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void remove()
 		{
@@ -136,7 +161,9 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			lastRet = null;
 			size--;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void set(E e)
 		{
@@ -148,7 +175,9 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			}
 			lastRet.data = e;
 		}
-
+		/**
+		 * {@inheritDoc}
+		 */
 		@Override
 		public void add(E e)
 		{
@@ -163,7 +192,6 @@ public class LinkedList<E> extends AbstractSequentialList<E>
 			prevIdx++;
 			size++;
 			lastRet = null;
-		}
-		
+		}		
 	}
 }

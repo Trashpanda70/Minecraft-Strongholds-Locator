@@ -4,17 +4,11 @@ import util.LinkedList;
 
 
 /**
- * Calculates the approximate coordinates of all stronghold in the stronghold ring given
- * the coordinates of a single stronghold in that ring. The program will calculate what ring the stronghold 
- * is in, but if the stronghold snaps to outside of the ring the user can manually input what ring the stronghold 
- * is in and the program will continue from there, or request that the program guess what ring the stronghold 
- * is in if they are not familiar with Stronghold generation. The user can also opt to print the predicted 
- * Nether travel coordinates if they want.
- * 
- * This program uses the Stronghold generation for Minecraft Java Edition 1.9.0 - 1.17.1, if any major changes to 
- * Stronghold generation are made after version 1.17.1 then this program will not work properly unless updated.
- * 
- * @see Coords For more information about coordinate objects
+ *This class does all calculations that actually make the program function using various methods to process
+ *the coordinates the user gives and provide a list of coordinates that the other strongholds should be close to 
+ *using Trigonometry. The coordinates should be meaured by standing in the center of the starter staircase,
+ *more info on how to properly get the coordinates in the README.
+ *
  * @author Matthew Welker
  */
 public class RingCalculator
@@ -23,7 +17,7 @@ public class RingCalculator
 	private double x;
 	/** z coordinate of the stronghold that has been found*/
 	private double z;
-	/** what ring the stronghold is in using calculation / manual input*/
+	/** what ring the stronghold is in using calculation or manual input*/
 	private int ring;
 	/**The mininum distance that a stronghold can form from the origin in the ring of the given stronghold*/
 	private int min;
@@ -65,7 +59,9 @@ public class RingCalculator
 			{MAX1, MAX2, MAX3, MAX4, MAX5, MAX6, MAX7, MAX8};
 	
 	/**
-	 * Initializes needed values using given coords
+	 * Initializes necessary values using given coords
+	 * Adds 4 to both coordinates in order to do calculations from the chunk center, which is the point that
+	 * the Stronghold actually generates from and where a thrown Eye of Ender will point.
 	 * @param x The given x coordinate
 	 * @param z The given z coordinate
 	 * @param ignore Whether to catch the ringCoords exception or not, will only be used if the user will be
@@ -80,8 +76,8 @@ public class RingCalculator
 		catch (IllegalCoordsException e) {
 			if (!ignore) throw new IllegalCoordsException();
 		}
-		this.x = x;
-		this.z = z;
+		this.x = x + 4;
+		this.z = z + 4;
 	}
 	/**Gets the given x coordinate*/
 	public double getX() {
@@ -118,7 +114,9 @@ public class RingCalculator
 	/**
 	 * Guesses what ring a set of coordinates are in.
 	 * This method assumes that the stronghold snaps outside the ring meaning that the ring could not be
-	 * set by the ringCoords() method
+	 * set by the ringCoords() method.
+	 * The guess is made by calculating the distance from the origin and finding which ring has the closest
+	 * minimum or maximum Stronghold spawn distance.
 	 * @param x The x coordinate of the supposed Stronghold
 	 * @param z The z coordinate of the supposed Stronghold
 	 * @return The average distance of a Stronghold in the calculated ring
@@ -204,7 +202,7 @@ public class RingCalculator
 	 * Method that actually does the calculation for stronghold locations based on the given x and z values
 	 * along with the calculated values for the ring, angle, and number of strongholds in the ring
 	 * @param nether Whether to have the coordinates as nether coordinates or not
-	 * @return A LinkedList of ideal nether blind coordinates or overworld coordinates
+	 * @return A LinkedList of ideal nether travel coordinates or overworld coordinates
 	 */
 	public LinkedList<Coords> calcStrongholds(boolean nether) {
 		double angleBetween = round(360 / numStrongholds); //The angle between strongholds

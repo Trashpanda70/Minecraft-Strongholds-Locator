@@ -17,44 +17,72 @@ import javax.swing.border.TitledBorder;
 
 import model.*;
 /**
- * GUI for RingCalculator
- * @see RingCalculator
+ * Swing GUI used to let the user input coordinates of a stronghold and get the approximate coordinates of the 
+ * other Strongholds in the ring. The user can display these coordinates as nether travel coordinates and remove
+ * them from the list once they have visited the Stronghold they lead to.
  */
 public class RingCalculatorGUI extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
+	/**Panel for the top portion of the GUI that displays information about the Stronghold and ring*/
 	private JPanel top;
+	/**
+	 * Panel for the bottom portion of the GUI that displays the calculated coordinates and actions the user can 
+	 * do with them 
+	 */
 	private JPanel bottom;
-	private JRadioButton netherRadBtn = new JRadioButton(); //If checked will display coords in nether coords
-	private JTextField xField = new JTextField(5); //Field to enter x coord
-	private JTextField zField = new JTextField(5); //Field to enter z coord
-	private JButton calculateBtn; //Button to calculate coords
-	private JButton resetBtn; //Button to reset for next input
-	private JButton removeBtn; //Button to remove an entry from the table
-	//labels
+	/**If selected, it will display the coordinates in nether travel coordinates*/
+	private JRadioButton netherRadBtn = new JRadioButton(); 
+	/**Where the user enters the Stronghold x coordinate*/
+	private JTextField xField = new JTextField(5);
+	/**Where the user enters the Stronghold z coordinate*/
+	private JTextField zField = new JTextField(5); 
+	/**Button that calculates the coordinates of other Strongholds in the ring*/
+	private JButton calculateBtn; 
+	/**Resets the table so the user can do another calculation*/
+	private JButton resetBtn; 
+	/**Removes a single set of coordinates from the table*/
+	private JButton removeBtn; 
+	/**Label - Found Stronghold coords*/
 	private JLabel coordsLbl = new JLabel("Stronghold Coords: ");
+	/**Label - Found Stronghold x coordinate*/
 	private JLabel xLbl = new JLabel("X = "); 
+	/**Label - Found Stronghold z coordinate*/
 	private JLabel zLbl = new JLabel("Z = "); 
-	private JLabel ringLbl = new JLabel("Ring: "); //will be updated to include the ring
-	private JLabel numStrongholdsLbl = new JLabel("Num Strongholds: "); //will be updated to include the numStrongholds
-	private JLabel strongholdsLeftLbl = new JLabel("Strongholds left: "); //will be updated to include numStrongholds left
-	
-	//Error message for when program closes unexpectedly
+	/**Label - Stronghold ring, is updated to display the ring number*/
+	private JLabel ringLbl = new JLabel("Ring: "); 
+	/**Label - Number of Strongholds in the ring, is updated to display the number of Strongholds in the ring*/
+	private JLabel numStrongholdsLbl = new JLabel("Num Strongholds: "); 
+	/**
+	 * Label - Strongholds left in ring, is updated each time the user removes a set of coordinates from the table
+	 * and when the calculation is first done.
+	 */
+	private JLabel strongholdsLeftLbl = new JLabel("Strongholds left: "); 
+	/*Error message for when program closes unexpectedly*/
 	private static final String ERRORMSG = 
 			"An unexpected error has occured, please report this and what steps would be needed to reproduce it.";
-	//Title for error message box
+	/**Title for error message box*/
 	private static final String ERRORTITLE = "That shouldn't happen!"; 
-	
-	private LinkedList<Coords> list; //List to be displayed
-	boolean nether = false; //boolean to flag whether to use nether coordinates
-	RingCalculator r; //Instance of RingCalculator to use for calculation
-	private JTable coordsTbl; //Table that holds calculated coords
-    private final String[] colNames = {"+/+", "+/-", "-/+", "-/-"}; //Table column names
-    private Object[][] data; //Table column names
-    private boolean setDefault = false; //Whether the user has set a default option for if the Coords are not in a ring
+	/**List of coordinates to display in the table*/
+	private LinkedList<Coords> list; 
+	/**Boolean to flag whether to use nether coordinates*/
+	boolean nether = false; 
+	/**Instance of RingCalculator to use for calculations*/
+	RingCalculator r; 
+	/**Table that holds the calculated coordinates*/
+	private JTable coordsTbl; 
+	/**Column headers for the coordinates table to separate calculated coordinates by quadrant*/
+    private final String[] colNames = {"+/+", "+/-", "-/+", "-/-"}; 
+    /**Used to store the coordinate objects in the table*/
+    private Object[][] data;
+    /**Whether the user has set a default option for if the Coords are not in a ring*/
+    private boolean setDefault = false; 
 	//The following are all variables related to the dialog boxes used when trying to calculate coords
+    /**Title of the dialog box*/
     private String title;
+    /**Message the box displays*/
     private String message;
+    /**The choice the user selected in the dialog box*/
     private int choice;
     /**
 	 * Starts GUI
@@ -76,7 +104,10 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 		 c.add(bottom);
 		 setVisible(true);
 	}
-	//Construct the top panel
+	/**
+	 * Constructs the top JPanel of the GUI that displays information about the user-input coordinates and the
+	 * Stronghold ring that those coordinates are in
+	 */
 	private void setTop() 
 	{
 		//GridBagLayout constraints
@@ -119,14 +150,17 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 		strongholdsLeftLbl.setAlignmentX(LEFT_ALIGNMENT);
 		top.add(strongholdsLeftLbl, gbc);
 	}
-	//Construct the bottom panel
+	/**
+	 * Constructs bottom JPanel that inlcudes the calculated coordinates table and functions the user can use to
+	 * alter the data that is displayed.
+	 */
 	private void setBottom()
 	{
 		bottom = new JPanel();
 		TitledBorder border = BorderFactory.createTitledBorder(
 				BorderFactory.createEtchedBorder(EtchedBorder.LOWERED), "Calculated Information");
 		bottom.setBorder(border);
-		//Create JPanel with reset button and nether radiobutton
+		//Create JPanel with reset button and nether radio button
 		JPanel functions = new JPanel();
 		resetBtn = new JButton("Reset");
 		resetBtn.addActionListener(this);
@@ -177,7 +211,9 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 		JScrollPane scroll = new JScrollPane(coordsTbl);
 		bottom.add(scroll);
 	}
-	//When an action is performed on a component
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -267,6 +303,19 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 		//nether radio button
 		else if (e.getSource() == netherRadBtn) {
 			nether = netherRadBtn.isSelected();
+			if (list != null && r != null) {
+				if (nether) {
+					for (Coords c : list) {
+						c.convertNether();
+					}
+				}
+				else {
+					for (Coords c : list) {
+						c.convertOverworld();
+					}
+				}
+				fillData(r.CoordsToArray(list));
+			}
 		}
 		//remove button
 		else if (e.getSource() == removeBtn) {
@@ -284,12 +333,16 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 			coordsTbl.clearSelection();
 		}
 	}
-	//Fills table data with given array
+	/**
+	 * Fills the coordinates table with the data in the given array
+	 * @param arr The array of values to fill the table with
+	 */
 	private void fillData(String[][] arr) 
 	{
 		if (arr != null) {
+			int i; //Used to have more access than just the nested loop
 			data = new Object[arr.length][arr[0].length];
-			for (int i = 0; i < arr.length; i++) {
+			for (i = 0; i < arr.length; i++) {
 				for (int j = 0; j < arr[0].length; j++) {
 					data[i][j] = arr[i][j];
 					coordsTbl.setValueAt(arr[i][j], i, j);
@@ -297,7 +350,10 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 			}
 		}
 	}
-	//Updates GUI with new calculations
+	/**
+	 * Updates the GUI with information about the number of Storngholds in the ring, number of remaining 
+	 * Strongholds, and the ring number. For use when resetting the program or when removing a set of coordinates.
+	 */
 	private void update() 
 	{
 		if (r == null) {
@@ -311,7 +367,11 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 			ringLbl.setText("Ring: " + r.getRing());
 		}
 	}
-	//Removes a cell from the table
+	/**
+	 * Removes the data from the cell in the table with the given row and column
+	 * @param row The row of the cell to clear
+	 * @param col The colummn of the cell to clear
+	 */
 	private void remove(int row, int col) 
 	{
 		try {
@@ -319,10 +379,9 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 			for (Coords c : list) {
 				if (s.equals(c.toString())) {
 					list.remove(c);
+					coordsTbl.setValueAt(null, row, col);
 					if (list.size() > 0)
 						fillData(r.CoordsToArray(list));
-					else 
-						coordsTbl.setValueAt(null, row, col);
 					break;
 				}
 			}
@@ -333,7 +392,10 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	//main to start GUI
+	/**
+	 * Main method to start the GUI
+	 * @param args Arguments to be passed from command line
+	 */
 	public static void main(String[] args) {
 		new RingCalculatorGUI();
 	}
