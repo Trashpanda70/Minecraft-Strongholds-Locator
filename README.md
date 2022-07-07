@@ -1,3 +1,5 @@
+# [DOWNLOAD](https://drive.google.com/file/d/1lo_HM4BqYZF-Dpc9y4U26WeaqXZMI5Wa/view?usp=sharing)
+
 # Minecraft Stronghold Locator
 For Minecraft Java Edition Versions 1.9 and later assuming there are no major changes to Stronghold generation.
 This is NOT a Minecraft Speedrun Stronghold location calculator, unless the speedrun is All Portals 1.9+
