@@ -23,6 +23,7 @@ import model.*;
  */
 public class RingCalculatorGUI extends JFrame implements ActionListener
 {
+	/**Serial Version ID*/
 	private static final long serialVersionUID = 1L;
 	/**Panel for the top portion of the GUI that displays information about the Stronghold and ring*/
 	private JPanel top;
@@ -211,9 +212,7 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 		JScrollPane scroll = new JScrollPane(coordsTbl);
 		bottom.add(scroll);
 	}
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -380,8 +379,18 @@ public class RingCalculatorGUI extends JFrame implements ActionListener
 				if (s.equals(c.toString())) {
 					list.remove(c);
 					coordsTbl.setValueAt(null, row, col);
-					if (list.size() > 0)
-						fillData(r.CoordsToArray(list));
+					if (list.size() > 0) {
+						//inefficient fix to visual bug when removing values for rings with large amount of strongholds
+						//fillData(r.CoordsToArray(list)); OLD
+						String[][] arr = new String[15][4];
+						String[][] fill = r.CoordsToArray(list);
+						for (int i = 0; i < fill.length; i++) {
+							for (int k = 0; k < fill[i].length; k++) {
+								arr[i][k] = fill[i][k];
+							}							
+						}
+						fillData(arr);
+					}
 					break;
 				}
 			}
