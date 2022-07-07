@@ -7,7 +7,7 @@ This is NOT a Minecraft Speedrun Stronghold location calculator, unless the spee
 ## What It Does
 - This program will take the coordinates of a single stronghold found by the player and give apporximated coordinates for every other stronghold in that ring. 
 - This is mostly useful for servers where access to /seed is not allowed, so other resources like [Chunkbase](https://www.chunkbase.com/apps/stronghold-finder) would not work.
-- Since the program does not read from the game files and simply does calculations, it could technically be used in speedruns where /seed is not allowed
+- This program does not read from any game files and simply performs a series of trigonometric calculations
 
 ## Stronghold Generation Quick Summary
 - Strongholds in Minecraft Java Edition generate in 8 rings with the origin (0,0) as the center point.
