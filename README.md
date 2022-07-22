@@ -2,10 +2,11 @@
 
 # Minecraft Stronghold Locator
 For Minecraft Java Edition Versions 1.9 and later assuming there are no major changes to Stronghold generation.
-This is NOT a Minecraft Speedrun Stronghold location calculator, unless the speedrun is All Portals 1.9+
+This is NOT a Minecraft Speedrun Stronghold location calculator, unless the speedrun is All Portals 1.9+.
+The download is an executable jar.
 
 ## What It Does
-- This program will take the coordinates of a single stronghold found by the player and give apporximated coordinates for every other stronghold in that ring. 
+- This program will take the coordinates of a single stronghold found by the player and gives apporximated coordinates for every other stronghold in that ring. 
 - This is mostly useful for servers where access to /seed is not allowed, so other resources like [Chunkbase](https://www.chunkbase.com/apps/stronghold-finder) would not work.
 - This program does not read from any game files and simply performs a series of trigonometric calculations
 
