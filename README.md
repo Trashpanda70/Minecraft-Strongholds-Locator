@@ -38,7 +38,6 @@ The program uses the X and Z coordinates input by the player of the location of 
 The user can remove coordinates from the list as they find Strongholds and reset the UI for their next calculation.
 
 ## Notes
-- Accuracy tends to go down the farther from the origin the Stronghold is.
 - If a Stronghold tries to generate in certain places such as an Ocean, Swamp, or River, it may "snap" to a different biome it is allowed to generate in if it is close enough. This can have 2 effects:
   - The Stronghold position might slightly outside one of the rings
   - The angle used to calculate might be incorrect and lead to the distance between the Stronghold position and calculated position being farther than normal
